@@ -16,8 +16,13 @@ use Illuminate\Support\Facades\App;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Para ver directamente el login al abrir el proyecto
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
