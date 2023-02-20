@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Treatment;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 
@@ -32,9 +30,6 @@ class TreatmentSeeder extends Seeder
                 'type' => $type,
             ]);
         }
-
-        // Treatment::truncate();
-        // Treatment::factory()->count(5)->create();
     }
 
     private function generateUniqueName($name)

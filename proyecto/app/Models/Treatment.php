@@ -10,4 +10,5 @@ class Treatment extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'price', 'type'];
+
 }

@@ -35,35 +35,6 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
-
-        // $credentials = $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required',
-        // ]);
-
-        // if (Auth::attempt($credentials)) {
-        //     $user = Auth::user();
-        //     if ($user->rol === 'recepcionista') {
-        //         $request->session()->put('rol', 'recepcionista');
-        //     } else if ($user->rol === 'gerente') {
-        //         $request->session()->put('rol', 'gerente');
-        //     }
-        //     $request->session()->regenerate();
-        //     return redirect()->intended('/socios');
-        // }
-
-        // return back()->withErrors([
-        //     'email' => 'The provided credentials do not match our records.',
-        // ]);
-
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-        //     return redirect()->intended('/socios');
-        // }
-
-        // return back()->withErrors([
-        //     'email' => 'The provided credentials do not match our records.',
-        // ]);
     }
 
     public function logout(Request $request)

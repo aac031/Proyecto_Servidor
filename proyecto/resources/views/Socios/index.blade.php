@@ -13,8 +13,11 @@
         @endif
         <hr class="my-4">
         <div class="container">
-            <h1>Listado de socios</h1>
-            <table class="table table-bordered table-striped">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Listado de socios</h1>
+                <a href="{{ route('socios.create') }}" class="btn btn-primary">Dar de alta a nuevo socio</a>
+            </div>
+            <table class="table table-bordered table-striped text-center">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -35,15 +38,17 @@
                         <td>{{ $socio->email }}</td>
                         @if(session('rol') === 'gerente')
                         <td>
-                            <a href="{{ route('socios.edit', ['id' => $socio->id]) }}" class="btn btn-primary">Modificar</a>
+                            <a href="{{ route('socios.show', $socio->id) }}" class="btn btn-success btn-sm">Ver</a>
+                            <a href="{{ route('socios.edit', ['id' => $socio->id]) }}" class="btn btn-primary btn-sm">Modificar</a>
                             <form action="{{ route('socios.destroy', ['id' => $socio->id]) }}" method="POST" style="display: inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro/a de que deseas eliminar este socio?')">Eliminar</button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro/a de que deseas eliminar este socio?')">Eliminar</button>
                             </form>
                         </td>
                         @else
                         <td>
+                            <a href="{{ route('socios.show', $socio->id) }}" class="btn btn-success btn-sm">Ver</a>
                             <a href="{{ route('socios.edit', ['id' => $socio->id]) }}" class="btn btn-primary">Modificar</a>
                         </td>
                         @endif
