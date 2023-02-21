@@ -54,18 +54,18 @@
                         @endif
 
                         <div class="form-label-group">
-                            <label for="email">{{ __('Email:') }}</label><br><br>
+                            <label for="email">{{ ('Email:') }}</label><br><br>
                             <input id="email" type="email" name="email" class="form-control" required autofocus>
                         </div>
                         <br>
                         <div class="form-label-group">
-                            <label for="password">{{ __('Password:') }}</label><br><br>
+                            <label for="password">{{ ('Password:') }}</label><br><br>
                             <input id="password" type="password" name="password" class="form-control" required>
                         </div>
                         <br>
                         <div class="form-label-group text-center">
                             <button type="submit" class="btn btn-lg btn-primary">
-                                {{ __('Login') }}
+                                {{ ('Login') }}
                             </button>
                         </div>
                     </form>

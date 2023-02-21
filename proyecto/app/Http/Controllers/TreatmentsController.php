@@ -32,6 +32,19 @@ class TreatmentsController extends Controller
             return back()->withErrors(['deletedTreatment' => 'Ya existe un tratamiento en esa fecha.']);
         }
 
+        // Verificar si existe un socio que tenga asignado ese tratamiento en esa fecha
+        $socioExistente = Socio::whereHas('treatments', function ($query) use ($tratamiento, $fecha_tratamiento) {
+            $query->where('treatment_id', $tratamiento->id)
+                ->where('fecha_tratamiento', $fecha_tratamiento);
+        })->exists();
+
+        // Si existe, agregar un error al formulario y redirigir al usuario a la página de creación de socio
+        if ($socioExistente) {
+            return redirect()->route('socios.show', $socio_id)
+                ->withInput($validated)
+                ->withErrors(['fecha_tratamiento' => 'Ya existe un socio con este tratamiento en esta fecha']);
+        }
+
         // Asociar el tratamiento al socio
         $socio->treatments()->attach($tratamiento->id, ['fecha_tratamiento' => $fecha_tratamiento]);
 

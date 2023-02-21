@@ -13,6 +13,13 @@
     </div>
     @endif
 
+    @if($errors->has('fecha_tratamiento'))
+    <div class="alert alert-danger">
+        <strong>Error:</strong> {{ $errors->first('fecha_tratamiento') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-md-12">
             <h2>Detalles del socio, {{ $socio->nombre }} {{ $socio->apellidos }} :</h2>
