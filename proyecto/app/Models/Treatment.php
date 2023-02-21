@@ -11,4 +11,8 @@ class Treatment extends Model
 
     protected $fillable = ['name', 'price', 'type'];
 
+    public function socios()
+    {
+        return $this->belongsToMany(Socio::class)->withPivot('id', 'fecha_tratamiento');
+    }
 }

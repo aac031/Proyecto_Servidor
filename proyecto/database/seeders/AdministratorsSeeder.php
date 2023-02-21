@@ -18,7 +18,7 @@ class AdministratorsSeeder extends Seeder
         $faker = Factory::create();
 
         // Elimina todos los registros antiguos de la tabla 'administrators'
-        DB::table('administrators')->truncate();
+        // DB::table('administrators')->truncate();
 
         // Genero todos los datos aleatorios para introducirlos en la tabla 'administrators'
         for ($i = 1; $i <= 10; $i++) {

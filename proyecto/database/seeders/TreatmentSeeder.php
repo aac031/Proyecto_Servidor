@@ -13,7 +13,7 @@ class TreatmentSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('treatments')->truncate();
+        // DB::table('treatments')->truncate();
 
         $faker = Factory::create();
 

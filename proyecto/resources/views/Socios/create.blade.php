@@ -8,7 +8,7 @@
     @if($errors->has('fecha_tratamiento'))
     <div class="alert alert-danger">{{ $errors->first('fecha_tratamiento') }}</div>
     @endif
-    
+
     <h1>Crear nuevo socio</h1>
     <form method="POST" action="{{ route('socios.store') }}">
         @csrf
@@ -36,14 +36,14 @@
             <label for="treatment" class="form-label">Tratamiento:</label>
             <select class="form-select" id="treatment" name="treatment">
                 @foreach ($treatments as $treatment)
-                <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>
+                <option value="{{ $treatment->id }}">{{ $treatment->name }} - ({{ $treatment->price }} €)</option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
             <label for="fecha_tratamiento" class="form-label">Fecha del tratamiento:</label>
-            <input type="date" class="form-control" id="fecha_tratamiento" name="fecha_tratamiento">
+            <input type="date" class="form-control" id="fecha_tratamiento" name="fecha_tratamiento" min="{{ date('Y-m-d') }}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">

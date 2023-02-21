@@ -115,22 +115,6 @@ class SociosController extends Controller
         return view('socios.show', ['socio' => $socio, 'treatments' => $treatments]);
     }
 
-    public function destroyTreatment(SocioTreatment $socioTreatment)
-    {
-        dd($socioTreatment);
-
-        if ($socioTreatment) {
-            // Eliminar el tratamiento de la tabla pivot
-            $socioTreatment->socio->treatments()->detach($socioTreatment->treatment_id);
-
-            // Eliminar el registro de la tabla pivot
-            $socioTreatment->delete();
-        }
-
-        // Redirigir de vuelta a la página anterior
-        return redirect()->back();
-    }
-
     public function destroy($id)
     {
         // Buscar el socio que se va a eliminar

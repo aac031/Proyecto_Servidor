@@ -13,18 +13,31 @@
     </div>
     @endif
 
-    <h2>Detalles del socio, {{ $socio->nombre }} {{ $socio->apellidos }} :</h2>
-
     <div class="row">
-        <div class="col-md-6">
-            <p><strong>Nombre:</strong> {{ $socio->nombre }}</p>
-            <p><strong>Apellidos:</strong> {{ $socio->apellidos }}</p>
-            <p><strong>Email:</strong> {{ $socio->email }}</p>
-            <p><strong>Teléfono:</strong> {{ $socio->telefono }}</p>
-            <p><strong>Precio total:</strong> {{ $socio->precioTotal() }} €</p>
-        </div>
-        <div class="col-md-6 text-end">
-            <a href="{{ route('socios.index') }}" class="btn btn-secondary">Volver</a>
+        <div class="col-md-12">
+            <h2>Detalles del socio, {{ $socio->nombre }} {{ $socio->apellidos }} :</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ $socio->nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Apellidos</th>
+                    <td>{{ $socio->apellidos }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ $socio->email }}</td>
+                </tr>
+                <tr>
+                    <th>Teléfono</th>
+                    <td>{{ $socio->telefono }}</td>
+                </tr>
+                <tr>
+                    <th>Precio total</th>
+                    <td class="fs-4">{{ $socio->precioTotal() }} €</td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -32,9 +45,10 @@
 
     <h3>Tratamientos actuales</h3>
 
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
             <tr>
+                <th>ID</th>
                 <th>Tratamiento</th>
                 <th>Fecha del tratamiento</th>
                 <th>Precio</th>
@@ -44,24 +58,29 @@
         </thead>
         <tbody>
             @foreach($socio->treatments as $treatment)
+            @if ($treatment)
             <tr>
+                <td>{{ $treatment->pivot->id }}</td>
                 <td>{{ $treatment->name }}</td>
                 <td>{{ $treatment->pivot->fecha_tratamiento }}</td>
                 <td>{{ $treatment->price }} €</td>
                 <td>{{ $treatment->type }}</td>
                 <td class="text-center">
-                    <form action="{{ route('socios.treatments.destroy', $socioTreatment) }}" method="POST">
+                    <form action="{{ route('socio.treatments.destroy', [$socio->id, $treatment->pivot->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
                     </form>
                 </td>
             </tr>
+            @endif
             @endforeach
+
         </tbody>
     </table>
     <div class="text-end mb-3">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tratamientoModal">Añadir tratamiento</button>
+        <a href="{{ route('socios.index') }}" class="btn btn-secondary">Volver</a>
     </div>
     <div class="modal fade" id="tratamientoModal" tabindex="-1" aria-labelledby="tratamientoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -75,25 +94,26 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="name">Nombre</label>
+                            <label for="name">Nombre:</label>
                             <select class="form-control" id="name" name="name">
                                 @foreach ($treatments as $treatment)
-                                <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>
+                                <option value="{{ $treatment->id }}">{{ $treatment->name }} - ({{ $treatment->price }} €)</option>
                                 @endforeach
                             </select>
                         </div>
-
+                        <br>
                         <div class="form-group">
-                            <label for="fecha_tratamiento">Fecha de tratamiento</label>
-                            <input type="date" class="form-control" id="fecha_tratamiento" name="fecha_tratamiento">
+                            <label for="fecha_tratamiento">Fecha de tratamiento:</label>
+                            <input type="date" class="form-control" id="fecha_tratamiento" name="fecha_tratamiento" min="{{ date('Y-m-d') }}">
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <br>
+                        <div class="text-center mb-3">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@yield('scripts')
 @endsection

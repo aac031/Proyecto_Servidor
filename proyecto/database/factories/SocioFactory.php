@@ -18,7 +18,6 @@ class SocioFactory extends Factory
     {
         return [
             'nombre' => $this->faker->firstname(),
-            // 'apellidos' => $this->faker->lastname(),
             'apellidos' => $this->faker->lastName() . ' ' . $this->faker->lastName(),
             'telefono' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail,

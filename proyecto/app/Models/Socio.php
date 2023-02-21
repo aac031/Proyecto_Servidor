@@ -13,7 +13,7 @@ class Socio extends Model
 
     public function treatments()
     {
-        return $this->belongsToMany(Treatment::class, 'socio_treatment')->withPivot('fecha_tratamiento');
+        return $this->belongsToMany(Treatment::class, 'socio_treatment')->withPivot('id', 'fecha_tratamiento');
     }
 
     public function socio_treatments()
