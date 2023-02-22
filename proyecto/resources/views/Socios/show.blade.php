@@ -14,7 +14,7 @@
     @endif
 
     @if($errors->has('fecha_tratamiento'))
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Error:</strong> {{ $errors->first('fecha_tratamiento') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -52,7 +52,7 @@
 
     <h3>Tratamientos actuales</h3>
 
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover text-center">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
@@ -60,6 +60,7 @@
                 <th>Fecha del tratamiento</th>
                 <th>Precio</th>
                 <th>Tipo</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -72,7 +73,12 @@
                 <td>{{ $treatment->pivot->fecha_tratamiento }}</td>
                 <td>{{ $treatment->price }} €</td>
                 <td>{{ $treatment->type }}</td>
-                <td class="text-center">
+                <td>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centroModal{{ $treatment->id }}">
+                        Ver Centro
+                    </button>
+                </td>
+                <td>
                     <form action="{{ route('socio.treatments.destroy', [$socio->id, $treatment->pivot->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -82,7 +88,6 @@
             </tr>
             @endif
             @endforeach
-
         </tbody>
     </table>
     <div class="text-end mb-3">
@@ -99,7 +104,6 @@
                 <div class="modal-body">
                     <form action="{{ route('socios.treatments.store', $socio->id) }}" method="POST">
                         @csrf
-
                         <div class="form-group">
                             <label for="name">Nombre:</label>
                             <select class="form-control" id="name" name="name">
@@ -116,11 +120,51 @@
                         <br>
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    @foreach($socio->treatments as $treatment)
+    @if ($treatment)
+    <div class="modal fade" id="centroModal{{ $treatment->id }}" tabindex="-1" aria-labelledby="centroModalLabel{{ $treatment->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="centroModalLabel{{ $treatment->id }}">Detalles del Centro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nombre:</strong> {{ $treatment->centros()->first()->nombre }}</p>
+                    <p><strong>Razón social:</strong> {{ $treatment->centros()->first()->razon_social }}</p>
+                    <p><strong>Dirección:</strong> {{ $treatment->centros()->first()->direccion }}</p>
+                    <p><strong>Tipo:</strong> {{ $treatment->centros()->first()->tipo }}</p>
+
+                    @if ($treatment->centros()->first()->tipo === 'estetica')
+                    <p><strong>Teléfono:</strong> {{ $treatment->centros()->first()->telefono }}</p>
+                    <p><strong>Email:</strong> {{ $treatment->centros()->first()->email }}</p>
+                    <p><strong>NIF:</strong> {{ $treatment->centros()->first()->nif }}</p>
+                    <p><strong>Número de salas:</strong> {{ $treatment->centros()->first()->numero_salas }}</p>
+                    <p><strong>Servicio de fisioterapia:</strong> {{ $treatment->centros()->first()->servicio_fisioterapia ? 'Si' : 'No' }}</p>
+                    @elseif ($treatment->centros()->first()->tipo === 'peluqueria')
+                    <p><strong>Teléfono:</strong> {{ $treatment->centros()->first()->telefono }}</p>
+                    <p><strong>Email:</strong> {{ $treatment->centros()->first()->email }}</p>
+                    <p><strong>NIF:</strong> {{ $treatment->centros()->first()->nif }}</p>
+                    <p><strong>Capacidad máxima:</strong> {{ $treatment->centros()->first()->capacidad_maxima }}</p>
+                    <p><strong>Unisex:</strong> {{ $treatment->centros()->first()->unisex ? 'Si' : 'No' }}</p>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @endforeach
+
 </div>
 @endsection

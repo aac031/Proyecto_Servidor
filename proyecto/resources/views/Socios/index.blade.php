@@ -49,7 +49,7 @@
                         @else
                         <td>
                             <a href="{{ route('socios.show', $socio->id) }}" class="btn btn-success btn-sm">Ver</a>
-                            <a href="{{ route('socios.edit', ['id' => $socio->id]) }}" class="btn btn-primary">Modificar</a>
+                            <a href="{{ route('socios.edit', ['id' => $socio->id]) }}" class="btn btn-primary btn-sm">Modificar</a>
                         </td>
                         @endif
                     </tr>

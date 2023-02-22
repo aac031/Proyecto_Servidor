@@ -15,4 +15,9 @@ class Treatment extends Model
     {
         return $this->belongsToMany(Socio::class)->withPivot('id', 'fecha_tratamiento');
     }
+
+    public function centros()
+    {
+        return $this->belongsToMany(Centro::class, 'centro_treatment', 'treatment_id', 'centro_id');
+    }
 }

@@ -22,7 +22,12 @@ class TreatmentSeeder extends Seeder
         foreach ($names as $name) {
             $uniqueName = $this->generateUniqueName($name);
             $price = $faker->randomFloat(2, 30, 120);
-            $type = $faker->randomElement(['estetica', 'peluqueria']);
+
+            if ($name == 'micropigmentación' || $name == 'cuidado cabello') {
+                $type = 'peluqueria';
+            } else {
+                $type = 'estetica';
+            }
 
             DB::table('treatments')->insert([
                 'name' => $uniqueName,

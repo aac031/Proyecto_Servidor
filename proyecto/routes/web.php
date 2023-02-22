@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CentrosController;
 use App\Http\Controllers\SociosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TreatmentsController;
@@ -40,5 +41,10 @@ Route::delete('/socios/{id}', [SociosController::class, 'destroy'])->name('socio
 Route::get('/treatments', [TreatmentsController::class, 'getTreatments'])->name('treatments.getTreatments')->middleware('auth');
 Route::post('/treatments', [TreatmentsController::class, 'store'])->name('treatments.store')->middleware('auth');
 
-Route::post('/socios/{id}/treatments', [TreatmentsController::class, 'store'])->name('socios.treatments.store');
-Route::delete('/socios/{socio}/treatments/{socioTreatmentId}', [TreatmentsController::class, 'destroy'])->name('socio.treatments.destroy');
+// Route::post('/socios/{id}/treatments', [TreatmentsController::class, 'store'])->name('socios.treatments.store')->middleware('auth');
+// Route::delete('/socios/{socio}/treatments/{socioTreatmentId}', [TreatmentsController::class, 'destroy'])->name('socio.treatments.destroy')->middleware('auth');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/socios/{id}/treatments', [TreatmentsController::class, 'store'])->name('socios.treatments.store');
+    Route::delete('/socios/{socio}/treatments/{socioTreatmentId}', [TreatmentsController::class, 'destroy'])->name('socio.treatments.destroy');
+});

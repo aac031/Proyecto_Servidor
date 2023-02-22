@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             AdministratorsSeeder::class,
             TreatmentSeeder::class,
             SocioSeeder::class,
+            CentrosSeeder::class,
+            CentroTreatmentSeeder::class,
         ]);
     }
 }
